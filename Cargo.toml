@@ -5,3 +5,5 @@ edition = "2021"
 
 [dependencies]
 dotenv = "0.15.0"
+async_lastfm = {git = "https://github.com/TomPlanche/async-last-fm-fetch.git"}
+tokio = { version = "1.43.0", features = ["full"] }
