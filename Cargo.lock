@@ -54,7 +54,7 @@ dependencies = [
 [[package]]
 name = "async_lastfm"
 version = "0.1.0"
-source = "git+https://github.com/TomPlanche/async-last-fm-fetch.git#4c3d8eb830590ca18d22c5be8294dcafc234bb06"
+source = "git+https://github.com/TomPlanche/async-last-fm-fetch.git#991661d8171e168f273bd484dc491ce270c56427"
 dependencies = [
  "chrono",
  "csv",

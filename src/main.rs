@@ -23,7 +23,7 @@ async fn main() {
             .await;
 
             if let Err(e) = handler
-                .export_recent_play_counts(TrackLimit::Limited(100))
+                .update_recent_play_counts(TrackLimit::Limited(100), "data/recent_play_counts.json")
                 .await
             {
                 eprintln!("Failed to export recent play counts: {e:?}");
