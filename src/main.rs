@@ -73,8 +73,9 @@ async fn fetch_current_track(handler: &LastFMHandler, destination_folder: &str) 
 #[tokio::main]
 async fn main() {
     dotenv::dotenv().ok();
+    let username = std::env::var("LAST_FM_USERNAME").expect("LAST_FM_USERNAME not set");
 
-    let handler = LastFMHandler::new("tom_planche");
+    let handler = LastFMHandler::new(&username);
     let destination_folder =
         std::env::var("DESTINATION_FOLDER").expect("DESTINATION_FOLDER not set");
 
