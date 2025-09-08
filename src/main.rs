@@ -3,12 +3,11 @@ use chrono::Utc;
 use cron::Schedule;
 use std::str::FromStr;
 use tokio::time::{sleep, Duration};
+mod config;
 
-///
-/// # `fetch_recent_play_counts`
 /// Fetches the recent play counts from Last.fm and exports them to a JSON file.
 ///
-/// ## Arguments
+/// # Arguments
 /// * `handler` - A reference to the `LastFMHandler` instance.
 /// * `destination_folder` - The folder where the JSON file will be exported.
 async fn fetch_recent_play_counts(handler: &LastFMHandler, destination_folder: &str) {
@@ -37,11 +36,9 @@ async fn fetch_recent_play_counts(handler: &LastFMHandler, destination_folder: &
     }
 }
 
-///
-/// # `fetch_current_track`
 /// Fetches the current track from Last.fm and exports it to a JSON file.
 ///
-/// ## Arguments
+/// # Arguments
 /// * `handler` - A reference to the `LastFMHandler` instance.
 /// * `destination_folder` - The folder where the JSON file will be saved.
 async fn fetch_current_track(handler: &LastFMHandler, destination_folder: &str) {
@@ -73,14 +70,14 @@ async fn fetch_current_track(handler: &LastFMHandler, destination_folder: &str) 
 #[tokio::main]
 async fn main() {
     dotenv::dotenv().ok();
-    let username = std::env::var("LAST_FM_USERNAME").expect("LAST_FM_USERNAME not set");
+    let cfg = config::Config::load().expect("Invalid or missing environment configuration");
+    cfg.ensure_destination_folder()
+        .expect("Failed to ensure destination folder exists");
 
-    let handler = LastFMHandler::new(&username);
-    let destination_folder =
-        std::env::var("DESTINATION_FOLDER").expect("DESTINATION_FOLDER not set");
+    let handler = LastFMHandler::new(&cfg.last_fm_username);
 
     tokio::join!(
-        fetch_recent_play_counts(&handler, &destination_folder),
-        fetch_current_track(&handler, &destination_folder)
+        fetch_recent_play_counts(&handler, &cfg.destination_folder),
+        fetch_current_track(&handler, &cfg.destination_folder)
     );
 }
