@@ -78,7 +78,7 @@ async fn fetch_current_track(handler: &LastFMHandler, destination_folder: &str) 
 /// - Fetches top tracks for the configured period and limit
 /// - Renders Markdown via `format_top_tracks_markdown`
 /// - Updates the gist content, logging (but not crashing) on errors
-async fn update_top_tracks_gist(handler: &LastFMHandler, username: &str, cfg: &Config) {
+async fn update_top_tracks_gist(handler: &LastFMHandler, cfg: &Config) {
     // Every hour, at minute 0
     let expression = "0 0 * * * *";
     let schedule = Schedule::from_str(expression).expect("Failed to parse CRON expression");
@@ -99,7 +99,7 @@ async fn update_top_tracks_gist(handler: &LastFMHandler, username: &str, cfg: &C
                 Ok(mut top_tracks) => {
                     top_tracks.sort_by(|a, b| b.playcount.cmp(&a.playcount));
 
-                    let content = format_top_tracks_markdown(username, &top_tracks);
+                    let content = format_top_tracks_markdown(&top_tracks);
 
                     if let Err(e) = update_gist(
                         &content,
@@ -132,6 +132,6 @@ async fn main() {
     tokio::join!(
         fetch_recent_play_counts(&handler, &destination_folder),
         fetch_current_track(&handler, &destination_folder),
-        update_top_tracks_gist(&handler, &cfg.last_fm_username, &cfg)
+        update_top_tracks_gist(&handler, &cfg)
     );
 }

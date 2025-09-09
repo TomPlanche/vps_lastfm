@@ -10,7 +10,6 @@
 //! - `GIST_FILENAME`: File name within the gist to update (defaults to `top-tracks.md`).
 
 use async_lastfm::types::TopTrack;
-use std::fmt::Write as _;
 use reqwest::header::{HeaderMap, HeaderValue, ACCEPT, AUTHORIZATION, CONTENT_TYPE, USER_AGENT};
 
 /// Updates a GitHub Gist file with the provided content.
@@ -124,7 +123,7 @@ pub fn format_tracks_markdown(items: &[(String, String, u64, u64)]) -> String {
 /// - Prepends a title: `"<username>'s top listened tracks (refreshed hourly)"`
 ///
 /// Returns a multi-line Markdown string.
-pub fn format_top_tracks_markdown(username: &str, tracks: &[TopTrack]) -> String {
+pub fn format_top_tracks_markdown(tracks: &[TopTrack]) -> String {
     let mut sorted: Vec<&TopTrack> = tracks.iter().collect();
     sorted.sort_by(|a, b| b.playcount.cmp(&a.playcount));
 
@@ -141,10 +140,7 @@ pub fn format_top_tracks_markdown(username: &str, tracks: &[TopTrack]) -> String
         .collect();
 
     let mut out = String::new();
-    let _ = write!(
-        out,
-        "{username}'s top listened tracks (refreshed hourly)\n\n"
-    );
     out.push_str(&format_tracks_markdown(&display_items));
+
     out
 }
