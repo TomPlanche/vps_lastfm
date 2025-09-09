@@ -3,18 +3,33 @@ use std::path::Path;
 pub struct Config {
     pub last_fm_username: String,
     pub destination_folder: String,
+    pub gist_id: String,
+    pub github_token: String,
+    pub gist_filename: String,
 }
 
 impl Config {
     pub fn load() -> Result<Self, String> {
         let last_fm_username = std::env::var("LAST_FM_USERNAME")
             .map_err(|_| String::from("Missing env var: LAST_FM_USERNAME"))?;
+
         let destination_folder = std::env::var("DESTINATION_FOLDER")
             .map_err(|_| String::from("Missing env var: DESTINATION_FOLDER"))?;
+
+        let gist_id =
+            std::env::var("GIST_ID").map_err(|_| String::from("Missing env var: GIST_ID"))?;
+
+        let github_token = std::env::var("GITHUB_TOKEN")
+            .map_err(|_| String::from("Missing env var: GITHUB_TOKEN"))?;
+
+        let gist_filename = std::env::var("GIST_FILENAME").unwrap_or_else(|_| String::from("top-tracks.md"));
 
         Ok(Self {
             last_fm_username,
             destination_folder,
+            gist_id,
+            github_token,
+            gist_filename,
         })
     }
 

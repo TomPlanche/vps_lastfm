@@ -5,7 +5,9 @@ edition = "2021"
 
 [dependencies]
 dotenv = "0.15.0"
-async_lastfm = {git = "https://github.com/TomPlanche/async-last-fm-fetch.git"}
+async_lastfm = { git = "https://github.com/TomPlanche/async-last-fm-fetch.git" }
 tokio = { version = "1.43.0", features = ["full"] }
 chrono = "0.4.39"
 cron = "0.15.0"
+reqwest = { version = "0.12.7", features = ["json", "rustls-tls"] }
+serde_json = "1.0"
