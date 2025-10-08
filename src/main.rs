@@ -93,7 +93,7 @@ async fn update_top_tracks_gist(handler: &LastFMHandler, cfg: &Config) {
             .await;
 
             let limit = TrackLimit::Limited(5);
-            let period = Some(Period::Month);
+            let period = Some(Period::Week);
 
             match handler.get_user_top_tracks(limit, period).await {
                 Ok(mut top_tracks) => {
