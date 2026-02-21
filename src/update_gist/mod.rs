@@ -9,7 +9,7 @@
 //! - `GIST_ID`: Identifier of the target gist.
 //! - `GIST_FILENAME`: File name within the gist to update (defaults to `top-tracks.md`).
 
-use async_lastfm::types::TopTrack;
+use lastfm_client::types::TopTrack;
 use reqwest::header::{HeaderMap, HeaderValue, ACCEPT, AUTHORIZATION, CONTENT_TYPE, USER_AGENT};
 
 /// Updates a GitHub Gist file with the provided content.
