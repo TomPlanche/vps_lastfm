@@ -138,6 +138,14 @@ async fn update_scrobbles_db(client: &LastFmClient, username: &str, db_file: &st
     let schedule = Schedule::from_str(expression).expect("Failed to parse CRON expression");
 
     loop {
+        if let Err(e) = client
+            .recent_tracks(username)
+            .fetch_and_update_sqlite(db_file)
+            .await
+        {
+            eprintln!("Failed to update scrobbles db: {e:?}");
+        }
+
         let now = Utc::now();
         if let Some(next) = schedule.upcoming(Utc).take(1).next() {
             let until_next = next - now;
@@ -145,14 +153,6 @@ async fn update_scrobbles_db(client: &LastFmClient, username: &str, db_file: &st
                 u64::try_from(until_next.num_seconds()).unwrap_or_default(),
             ))
             .await;
-
-            if let Err(e) = client
-                .recent_tracks(username)
-                .fetch_and_update_sqlite(db_file)
-                .await
-            {
-                eprintln!("Failed to update scrobbles db: {e:?}");
-            }
         }
     }
 }
