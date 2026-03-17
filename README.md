@@ -11,11 +11,11 @@ The application runs three concurrent jobs:
 
 ## Features
 
-- 🎵 Real-time Last.fm data fetching
-- 📊 Stores listening history in JSON format
-- 📝 Hourly GitHub Gist update with your top tracks
-- ⚡ Concurrent async jobs with robust scheduling
-- 🔄 Automatic periodic updates
+- Real-time Last.fm data fetching
+- Stores listening history in JSON format
+- Hourly GitHub Gist update with your top tracks
+- Concurrent async jobs with robust scheduling
+- Automatic periodic updates
 
 ## Output files
 
@@ -48,6 +48,7 @@ Set these in your `.env` (see `.env.example`):
 - `GITHUB_TOKEN`: personal access token with `gist` scope
 - `GIST_ID`: the target gist ID to update
 - `GIST_FILENAME`: filename within the gist (defaults to `top-tracks.md` if unset)
+- `DB_FILE`: path to the SQLite database file for scrobble history
 
 ## Setup
 

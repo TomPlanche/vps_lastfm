@@ -133,6 +133,16 @@ async fn update_top_tracks_gist(client: &LastFmClient, username: &str, cfg: &Con
     }
 }
 
+async fn update_scrobbles_db(client: &LastFmClient, username: &str, db_file: &str) {
+    if let Err(e) = client
+        .recent_tracks(username)
+        .fetch_and_update_sqlite(db_file)
+        .await
+    {
+        eprintln!("Failed to update scrobbles db: {e:?}");
+    }
+}
+
 #[tokio::main]
 async fn main() {
     dotenv::dotenv().ok();
@@ -148,6 +158,7 @@ async fn main() {
     tokio::join!(
         fetch_recent_play_counts(&client, &username, &destination_folder),
         fetch_current_track(&client, &username, &destination_folder),
+        update_scrobbles_db(&client, &username, &cfg.db_file),
         update_top_tracks_gist(&client, &username, &cfg)
     );
 }

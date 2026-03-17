@@ -5,9 +5,9 @@ edition = "2021"
 
 [dependencies]
 dotenv = "0.15.0"
-lastfm-client = { git = "https://github.com/TomPlanche/lastfm-client.git" }
-tokio = { version = "1.49.0", features = ["full"] }
-chrono = "0.4.43"
+lastfm-client = { version = "3.5.0", features = ["sqlite"]}
+tokio = { version = "1.50.0", features = ["full"] }
+chrono = "0.4.44"
 cron = "0.15.0"
 reqwest = { version = "0.12.28", features = ["json", "rustls-tls"] }
 serde_json = "1.0"

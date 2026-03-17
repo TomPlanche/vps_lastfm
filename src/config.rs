@@ -6,6 +6,7 @@ pub struct Config {
     pub gist_id: String,
     pub github_token: String,
     pub gist_filename: String,
+    pub db_file: String,
 }
 
 impl Config {
@@ -24,12 +25,16 @@ impl Config {
 
         let gist_filename = std::env::var("GIST_FILENAME").unwrap_or_else(|_| String::from("top-tracks.md"));
 
+        let db_file = std::env::var("DB_FILE")
+            .map_err(|_| String::from("Missing env var: DB_FILE"))?;
+
         Ok(Self {
             last_fm_username,
             destination_folder,
             gist_id,
             github_token,
             gist_filename,
+            db_file,
         })
     }
 
