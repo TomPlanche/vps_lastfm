@@ -140,7 +140,7 @@ async fn update_scrobbles_db(client: &LastFmClient, username: &str, db_file: &st
     loop {
         if let Err(e) = client
             .recent_tracks(username)
-            .fetch_and_update_sqlite(db_file)
+            .fetch_extended_and_update_sqlite(db_file)
             .await
         {
             eprintln!("Failed to update scrobbles db: {e:?}");
