@@ -744,9 +744,9 @@ dependencies = [
 
 [[package]]
 name = "lastfm-client"
-version = "4.0.1"
+version = "4.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3981316c9204b1df29524f029c3a711aa862b974cb1aab91db2e7817afa50543"
+checksum = "85aeadc190217a08fbc41f6c5d013220a7542f5b0ba04eebb62cd597a88093e7"
 dependencies = [
  "async-trait",
  "chrono",

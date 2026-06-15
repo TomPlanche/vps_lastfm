@@ -5,7 +5,7 @@ edition = "2021"
 
 [dependencies]
 dotenv = "0.15.0"
-lastfm-client = { version = "4.0.1", features = ["sqlite"]}
+lastfm-client = { version = "4.0.2", features = ["sqlite"]}
 tokio = { version = "1.52.3", features = ["full"] }
 chrono = "0.4.45"
 cron = "0.15.0"
