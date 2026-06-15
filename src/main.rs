@@ -1,4 +1,4 @@
-use lastfm_client::{LastFmClient, api::Period};
+use lastfm_client::{LastFmClient, api::Period, prelude::*};
 use chrono::Utc;
 use cron::Schedule;
 use std::str::FromStr;
@@ -112,7 +112,7 @@ async fn update_top_tracks_gist(client: &LastFmClient, username: &str, cfg: &Con
                 .await
             {
                 Ok(mut top_tracks) => {
-                    top_tracks.sort_by(|a, b| b.playcount.cmp(&a.playcount));
+                    top_tracks.sort_by_key(|t| std::cmp::Reverse(t.playcount));
 
                     let content = format_top_tracks_markdown(&top_tracks);
 

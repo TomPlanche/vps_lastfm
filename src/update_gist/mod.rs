@@ -125,7 +125,7 @@ pub fn format_tracks_markdown(items: &[(String, String, u64, u64)]) -> String {
 /// Returns a multi-line Markdown string.
 pub fn format_top_tracks_markdown(tracks: &[TopTrack]) -> String {
     let mut sorted: Vec<&TopTrack> = tracks.iter().collect();
-    sorted.sort_by(|a, b| b.playcount.cmp(&a.playcount));
+    sorted.sort_by_key(|t| std::cmp::Reverse(t.playcount));
 
     let display_items: Vec<(String, String, u64, u64)> = sorted
         .iter()
